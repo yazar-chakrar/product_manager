@@ -1,18 +1,23 @@
 import { Module, MiddlewareConsumer } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
 import { ThrottlerModule, ThrottlerGuard } from "@nestjs/throttler";
 import { APP_GUARD } from "@nestjs/core";
-import { TasksModule } from "./tasks/tasks.module";
+import { ProductsModule } from "./products/products.module";
 import { AuthModule } from "./auth/auth.module";
-import { typeOrmConfig } from "./config/typeorm.config";
 import { throttlerModuleConfig } from "./config/sec/throttlerModule.config";
 import { RequestLoggerMiddleware } from "./middlewares/request-logger.middleware";
+import { MongooseModule } from "@nestjs/mongoose";
+import { PurchaseOrdersModule } from "./purchase_order/purchase_orders.module";
+import { CreditCardsModule } from "./credit_cards_service/credit_cards.module";
 
 @Module({
 	imports: [
 		ThrottlerModule.forRoot(throttlerModuleConfig),
-		TypeOrmModule.forRoot(typeOrmConfig),
-		TasksModule,
+		MongooseModule.forRoot("mongodb://localhost:27017", {
+			dbName: "local",
+		}),
+		ProductsModule,
+		PurchaseOrdersModule,
+		CreditCardsModule,
 		AuthModule,
 	],
 	controllers: [],

@@ -1,7 +1,8 @@
 # compiled output
 /dist
 /node_modules
-/env
+# env should be inculded in real projects
+# /env
 
 # Logs
 logs

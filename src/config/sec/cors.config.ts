@@ -5,5 +5,5 @@ import {
 
 export const corsConfig: CorsOptions | CorsOptionsDelegate<any> = {
 	origin: "*",
-	methods: ["GET", "POST", "PATCH", "DELETE"], // Allow only GET and POST requests
+	methods: ["GET", "POST", "PATCH", "DELETE"], // Allowed requests
 };

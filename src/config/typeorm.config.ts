@@ -20,25 +20,15 @@ dotenv.config({
 });
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
-	type: "postgres",
-
+	type: "mongodb",
 	host: getEnvValue("DB_HOST"),
-	port: parseInt(getEnvValue("DB_PORT"), 10),
-	username: getEnvValue("DB_USER"),
-	password: getEnvValue("DB_PWD", false),
+	port: parseInt(getEnvValue("DB_PORT"), 27017),
 	database: getEnvValue("DB_NAME"),
 
 	entities: [__dirname + "/../**/*.entity{.ts,.js}"],
 
-	migrationsTableName: "migration",
-	migrations: ["src/migration/*.ts"],
-
-	/* cli: {
-		migrationsDir: "src/migration",
-	}, */
-
 	synchronize: true,
-	//logging: true,
+	logging: true,
 	//dropSchema: true,
 
 	ssl: isProduction(),

@@ -23,6 +23,7 @@ async function bootstrap() {
 	app.enableCors(corsConfig);
 	await app.register(fastifyCsrfProtection);
 
+	app.setGlobalPrefix("api/v01");
 	await app.listen(3000);
 }
 bootstrap();
