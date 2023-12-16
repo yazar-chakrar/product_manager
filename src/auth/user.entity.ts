@@ -1,34 +1,26 @@
-import {
-	BaseEntity,
-	Column,
-	Entity,
-	OneToMany,
-	PrimaryGeneratedColumn,
-	Unique,
-} from "typeorm";
 import * as bcrypt from "bcrypt";
-import { Task } from "src/tasks/task.entity";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 
-@Entity()
-@Unique(["username"])
-export class User extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	id: number;
-
-	@Column()
+@Schema()
+export class User extends Document {
+	@Prop({ unique: true })
 	username: string;
 
-	@Column()
+	@Prop()
 	salt: string;
 
-	@Column()
+	@Prop()
 	password: string;
 
-	@OneToMany(() => Task, task => task.user)
-	tasks: Task[];
-
-	async validatePassword(password: string): Promise<boolean> {
-		const hash = await bcrypt.hash(password, this.salt);
-		return hash === this.password;
-	}
+	validatePassword: (password: string) => Promise<boolean>;
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.methods.validatePassword = async function (
+	password: string,
+): Promise<boolean> {
+	const hash = await bcrypt.hash(password, this.salt);
+	return hash === this.password;
+};
