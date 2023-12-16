@@ -276,3 +276,49 @@ response: [
     }
 ]
 ```
+
+# Docker
+
+## Envirenments
+### development
+```
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+```
+### production
+```
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+# Security
+Some implemented security aspects in developing this application:
+
+##### HTTPS
+```
+Nginx Proxy Manager
+```
+##### Authentication & Authorization
+```
+PassportModule, JwtModule
+```
+##### Data Validation
+```
+DTOs
+```
+##### Cross-Origin Resource Sharing (CORS)
+```
+CORS
+```
+##### Logging and Monitoring
+```
+WinstonModule
+```
+##### Rate Limiting
+```
+ThrottlerModule
+```
+##### Error Handling
+```
+With Logging
+```
+
+
