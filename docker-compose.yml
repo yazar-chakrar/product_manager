@@ -1,0 +1,42 @@
+version: "2.17.3"
+
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443' 
+      - '81:81'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - node-app
+    networks:
+      - node-app
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-db:/data/db
+    networks:
+      - node-app
+
+  node-app:
+    container_name: node-app-container
+    build:
+      context: .
+    volumes:
+      - ./src:/app/src:ro
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - mongo
+    networks:
+      - node-app
+
+volumes:
+  mongo-db:
+networks:
+      - node-app
